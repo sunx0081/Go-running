@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_main);
         initView();
         framMag=getFragmentManager();
-        setTab(1);	//第一次启动时，选中第一个页面
+        setTab(0);	//第一次启动时，选中第一个页面
     }
 
 
