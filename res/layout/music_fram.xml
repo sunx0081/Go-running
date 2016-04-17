@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    android:orientation="vertical" >
+    
+    <ListView 
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </ListView>
+    
+    <LinearLayout
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+    <RelativeLayout
+       android:id="@+id/view_text"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+    <TextView 
+        android:id="@+id/mTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/mArtist"
+        android:layout_below="@+id/mTitle"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"/>
+   </RelativeLayout>
+   
+     <LinearLayout 
+         android:id="@+id/imageBt"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+       <ImageView 
+           android:id="@+id/before"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:src="@drawable/before"/>
+       
+       <ImageView
+           android:id="@+id/play"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:src="@drawable/play"/>
+       
+       <ImageView
+           android:id="@+id/next"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:src="@drawable/next"/>
+      </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
