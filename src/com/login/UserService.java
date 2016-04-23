@@ -29,4 +29,15 @@ public class UserService {
 		sdb.execSQL(sql, obj);	
 		return true;
 	}
+	
+	public boolean chekFromDb(String name){	//验证帐号是否被注册
+		SQLiteDatabase sdb=dbHelper.getReadableDatabase();
+		String sql="select username from user where username=?";
+		Cursor cursor=sdb.rawQuery(sql, new String[]{name});
+		if(cursor.moveToFirst()==true){		//如果cursor集合第一行有数据,则该帐号已被注册
+			cursor.close();
+			return true;
+		}else
+			return false;	
+	}
 }

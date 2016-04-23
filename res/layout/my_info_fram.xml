@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/info_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
+    <TextView 
+        android:id="@+id/user_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
     
     <Button 
         android:id="@+id/my_info"
@@ -26,6 +32,6 @@
         android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="注销帐号"/>"
+        android:text="注销帐号"/>
 
 </LinearLayout>

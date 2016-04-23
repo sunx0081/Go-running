@@ -2,13 +2,17 @@ package com.example.gorunning;
 
 import com.baidumap.LocationFragment;
 import com.example.mmusic.MusicFragment;
+import com.example.mmusic.PlayService;
 import com.myinfo.MyInfo;
-
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends BaseActivity implements OnClickListener {
 	private LocationFragment locationFram;
 	private MusicFragment musicFram;
 	private MyInfo myInfoFram;
@@ -28,13 +32,16 @@ public class MainActivity extends Activity implements OnClickListener {
 	private ImageView img1,img2,img3;
 	private TextView text1,text2,text3;
 	private FragmentManager framMag;
+	private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        initView();
+        initView();  
+		bind_service();	//绑定服务
+        getName();
         framMag=getFragmentManager();
         setTab(0);	//第一次启动时，选中第一个页面
     }
@@ -68,12 +75,21 @@ public class MainActivity extends Activity implements OnClickListener {
 			setTab(1);
 			break;
 		case R.id.info_view:
+			 Intent intent=new Intent("com.action.GET_NAME");	//发送广播
+			 intent.putExtra("username",username);
+			 LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcastSync(intent);
 			setTab(2);
 			break;
 		default:
 			break;
 		}
 		
+	}
+	
+	private String getName(){
+		 Intent intent=getIntent();
+	     username=intent.getStringExtra("username");
+	     return username;
 	}
 	
 	 private void setTab(int i) {		//在界面动态加载碎片
@@ -138,7 +154,27 @@ public class MainActivity extends Activity implements OnClickListener {
 		text3.setTextColor(Color.parseColor("#a9b7b7"));
 		
 	}
-
+	
+	private void bind_service(){
+		ServiceConnection connection=new ServiceConnection() {
+			
+			@Override
+			public void onServiceDisconnected(ComponentName name) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void onServiceConnected(ComponentName name, IBinder service) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		Intent bindIntent=new Intent(this,PlayService.class);
+		bindService(bindIntent,connection,BIND_AUTO_CREATE);
+	}
+	
+	
+	
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {

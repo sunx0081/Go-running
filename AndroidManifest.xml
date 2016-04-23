@@ -73,19 +73,42 @@
         <activity
             android:name="com.login.RegisterActivity">
         </activity>
+        <activity
+            android:name="com.myinfo.infoActivity">          
+        </activity>
+        <activity
+            android:name="com.myinfo.dataActivity">            
+        </activity>
+        <activity 
+            android:name="com.myinfo.shareActivity">            
+        </activity>
         <meta-data   
     		android:name="com.baidu.lbsapi.API_KEY"  
-    		android:value="4aTRROlYooTBBGfG1PAqOmvYFDuXcbuU">
+    		android:value="wkcoolhwCZFK9B0hHa9uwS2vstexzsFc">
         </meta-data>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
+            android:process=":remote"
+            android:permission="android.permission.BAIDU_LOCATION_SERVICE" >
             <intent-filter>
                 <action android:name="com.baidu.location.service_v1.0" >
                 </action>
             </intent-filter>
     	</service>
+    	<service 
+            android:name="com.example.mmusic.PlayService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.PLAY_MUSIC"/>
+            </intent-filter>
+        </service> 
+        <receiver android:name="com.myinfo.MyInfo$NameBroadcast"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.action.GET_NAME"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
