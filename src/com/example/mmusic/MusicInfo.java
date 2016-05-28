@@ -1,9 +1,9 @@
-package com.example.mmusic;
+﻿package com.example.mmusic;
 
 public class MusicInfo {
 	private String title;
 	private String artist;
-	private int duration;	//ʱ��
+	private int duration;	//时长
 	private String url;
 	
 	public MusicInfo(){}

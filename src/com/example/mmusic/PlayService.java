@@ -1,4 +1,4 @@
-package com.example.mmusic;
+ï»¿package com.example.mmusic;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,9 +6,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 public class PlayService extends Service {
 	private MediaPlayer mPlayer;
@@ -20,23 +20,25 @@ public class PlayService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
-		return new Binder();
+		return null;
 	}
-	
+
 	public void onCreate(){
 		super.onCreate();
+		Log.d("PlayService","is onCreate");
 		mPlayer=new MediaPlayer();
 		musicList=getMusic.getMusicInfo(PlayService.this);
 		mPlayer.setOnCompletionListener(new OnCompletionListener() {
 			
 			@Override
-			public void onCompletion(MediaPlayer mp) {	//Ò»Ê×¸è²¥·ÅÍê±ÏºóµÄ¶¯×÷
+			public void onCompletion(MediaPlayer mp) {	//ä¸€é¦–æ­Œæ’­æ”¾å®Œæ¯•åçš„åŠ¨ä½œ
 				// TODO Auto-generated method stub
 				sPosition++;
 				if(sPosition<=musicList.size()-1){
 					Intent intent=new Intent("com.action.UPDATE_MUSIC");
 					intent.putExtra("sPosition", sPosition);
 					LocalBroadcastManager.getInstance(PlayService.this).sendBroadcast(intent);
+					Log.d("BroadCast","is send");
 					url=musicList.get(sPosition).getUrl();
 					Play_music();
 				}else{
@@ -49,7 +51,6 @@ public class PlayService extends Service {
 				}
 			}
 		});
-		
 	}
 	
 	public int onStartCommand(Intent intent,int flags,int startId){
@@ -58,24 +59,21 @@ public class PlayService extends Service {
 		msg=intent.getStringExtra("msg");
 		if(msg.equals("isPlay")){
 			Play_music();
-		}else if(msg.equals("before_music")){	//ÉÏÒ»Ê×
+		}else if(msg.equals("before_music")){	//ä¸Šä¸€é¦–
 			Before_music();
-		}else if(msg.equals("next_music")){		//ÏÂÒ»Ê×
+		}else if(msg.equals("next_music")){		//ä¸‹ä¸€é¦–
 			Next_music();
-		}else if(msg.equals("music_pause")){	//ÔİÍ£
+		}else if(msg.equals("music_pause")){	//æš‚åœ
 			Pause_music();
-		}else if(msg.equals("music_play")){		//¼ÌĞø²¥·Å
+		}else if(msg.equals("music_play")){		//ç»§ç»­æ’­æ”¾
 			Go_start();
 		}
+		Log.d("PlayService","is startCommand");
 		return super.onStartCommand(intent, flags, startId);
 	}
 	
-	public void onDestory(){
-		super.onDestroy();
-	}
-	
 	public void Play_music(){
-		mPlayer.reset();
+		mPlayer.reset();	//åˆå§‹åŒ–
 		try {
 			mPlayer.setDataSource(url);
 			mPlayer.prepare();
@@ -104,6 +102,15 @@ public class PlayService extends Service {
 	
 	public void Before_music(){
 		Play_music();
+	}
+	
+	
+	public void onDestory(){
+		super.onDestroy();
+			mPlayer.stop();		
+			mPlayer.release();	//é‡Šæ”¾èµ„æº
+			mPlayer=null;
+		Log.d("PlayService","is stop");
 	}
 
 }

@@ -14,7 +14,7 @@
     <LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="58dp"
         android:background="#000000"
         android:orientation="horizontal">
         

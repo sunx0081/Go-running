@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login" >
+    
+    <ImageView
+        android:id="@+id/login_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/l_img"/>
+    
+    <LinearLayout 
+        android:id="@+id/butto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/login_img"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:src="@drawable/username"/>
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:paddingLeft="4dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:maxLength="16"
+                android:background="@drawable/l_button"
+                android:hint="请输入帐号！" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:src="@drawable/password"/>
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:paddingLeft="4dp"
+                android:inputType="textPassword"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:maxLength="16"
+                android:background="@drawable/l_button"
+                android:hint="请输入密码！" />
+        </LinearLayout>
+     </LinearLayout> 
+         
+        <LinearLayout
+            android:id="@+id/repass_lay" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/butto"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+        
+        <ImageView 
+         		    android:layout_width="50dp"
+         		    android:layout_height="wrap_content"/>
+            <CheckBox 
+                android:id="@+id/remember_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"/>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="16sp"
+                android:text="记住密码"/>
+         </LinearLayout>
+         
+        <LinearLayout
+            android:id="@+id/bt_lay" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/repass_lay"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+            
+         		<ImageView 
+         		    android:layout_width="63dp"
+         		    android:layout_height="48dp"/>
+                <Button
+                    android:id="@+id/login"
+                    android:layout_width="100dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="24dp"
+                    android:background="@drawable/btn_1"
+                    android:textSize="16sp"
+                    android:text="登录" />
+                <Button
+                    android:id="@+id/register"
+                    android:layout_width="100dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="@drawable/btn_1"
+                    android:textSize="16sp"
+                    android:text="注册" />
+         </LinearLayout>             
+
+</RelativeLayout>

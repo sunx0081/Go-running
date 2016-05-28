@@ -1,4 +1,4 @@
-package com.example.gorunning;
+﻿package com.example.gorunning;
 
 import android.app.Activity;
 import android.os.Bundle;

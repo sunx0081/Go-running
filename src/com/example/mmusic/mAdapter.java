@@ -1,4 +1,4 @@
-package com.example.mmusic;
+ï»¿package com.example.mmusic;
 
 import java.util.List;
 
@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class mAdapter extends BaseAdapter {		//×Ô¶¨ÒåµÄÊÊÅäÆ÷
+public class mAdapter extends BaseAdapter {		//è‡ªå®šä¹‰çš„é€‚é…å™¨
 	
 	private MusicInfo musicInfo;
 	private List<MusicInfo> mInfoList;
 	private Context ctx;
 		
-	public mAdapter(Context ctx,List<MusicInfo> mInfoList){	//¹¹Ôìº¯Êı
+	public mAdapter(Context ctx,List<MusicInfo> mInfoList){	//æ„é€ å‡½æ•°
 		this.ctx=ctx;
 		this.mInfoList=mInfoList;
 	}
@@ -51,28 +51,28 @@ public class mAdapter extends BaseAdapter {		//×Ô¶¨ÒåµÄÊÊÅäÆ÷
 		viewHolder.mTitle=(TextView)view.findViewById(R.id.title);
 		viewHolder.mArtist=(TextView)view.findViewById(R.id.artist);
 		viewHolder.mDuration=(TextView)view.findViewById(R.id.duration);
-		view.setTag(viewHolder);	//½«ViewHolder´æÔÚViewÖĞ
+		view.setTag(viewHolder);	//å°†ViewHolderå­˜åœ¨Viewä¸­
 		}else{
 			view=convertView;
-			viewHolder=(ViewHolder)view.getTag();	//ÖØĞÂ»ñÈ¡ViewHolder
+			viewHolder=(ViewHolder)view.getTag();	//é‡æ–°è·å–ViewHolder
 		}
 		viewHolder.mTitle.setText(musicInfo.getTitle());
 		viewHolder.mArtist.setText(musicInfo.getArtist());
-		viewHolder.mDuration.setText(toTime(musicInfo.getDuration()));	//±ØĞë½«int×ª»»³ÉString£¬·ñÔò±¨´í
+		viewHolder.mDuration.setText(toTime(musicInfo.getDuration()));	//å¿…é¡»å°†intè½¬æ¢æˆStringï¼Œå¦åˆ™æŠ¥é”™
 		return view;
 	}
 
-	class ViewHolder{		//ÄÚ²¿Àà ÌáÉıListViewµÄÔËĞĞĞ§ÂÊ
+	class ViewHolder{		//å†…éƒ¨ç±» æå‡ListViewçš„è¿è¡Œæ•ˆç‡
 		TextView mTitle;
 		TextView mArtist;
 		TextView mDuration;
 	}
 	
-	public static String toTime(int duration){		//½«Ê±³¤×ª»»³É·Ö£ºÃëµÄĞÎÊ½
+	public static String toTime(int duration){		//å°†æ—¶é•¿è½¬æ¢æˆåˆ†ï¼šç§’çš„å½¢å¼
 		int time=duration/1000;
 		int minute=time/60;
 		int second=time%60;
-		return String.format("%02d:%02d",minute,second);	//·µ»Ø½á¹ûÓÃstringµÄformat·½·¨°ÑÊ±¼ä×ª»»³É×Ö·ûÀàĞÍ
+		return String.format("%02d:%02d",minute,second);	//è¿”å›ç»“æœç”¨stringçš„formatæ–¹æ³•æŠŠæ—¶é—´è½¬æ¢æˆå­—ç¬¦ç±»å‹
 	}
 
 

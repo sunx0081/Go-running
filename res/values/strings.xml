@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Go running</string>
+    <string name="app_name">Go_Running</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="help">定位按钮：可在电子地图上定位；\n\n开始按钮：可在电子地图上标记起点，并开始记录运动的数据；\n\n结束按钮：可在电子地图上标记终点，停止记录数据和定位。</string>
 
 </resources>

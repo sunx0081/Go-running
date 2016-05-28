@@ -3,8 +3,39 @@
     android:id="@+id/music_fm"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg"
     android:orientation="vertical" >
+    
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/title_bg"
+        android:orientation="horizontal">
+        
+        <ImageView 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_weight="1"
+        	android:layout_marginStart="16dp"
+        	android:layout_marginLeft="16dp"
+        	android:src="@drawable/music"/>
+      
+        <TextView 
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:text="我的音乐"/>
+        
+        <ImageView 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="end|center"
+        	android:layout_marginEnd="16dp"
+        	android:layout_marginRight="16dp"/>
+    </LinearLayout>
     
     <ListView 
         android:id="@+id/list_view"
@@ -17,6 +48,7 @@
         android:id="@+id/bottom_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/play_bg"
         android:orientation="vertical">
         
     <RelativeLayout
@@ -43,11 +75,13 @@
          android:id="@+id/imageBt"
          android:layout_width="match_parent"
          android:layout_height="wrap_content">
+    
        <ImageView 
            android:id="@+id/before"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_weight="1"
+           android:layout_marginBottom="16dp"
            android:src="@drawable/before"/>
        
        <ImageView
@@ -55,6 +89,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_weight="1"
+           android:layout_marginBottom="16dp"
            android:src="@drawable/play"/>
        
        <ImageView
@@ -62,6 +97,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_weight="1"
+           android:layout_marginBottom="16dp"
            android:src="@drawable/next"/>
       </LinearLayout>
     </LinearLayout>

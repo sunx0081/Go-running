@@ -1,18 +1,20 @@
-package com.example.gorunning;
+ï»¿package com.example.gorunning;
+
+import cn.bmob.v3.Bmob;
 
 import com.baidumap.LocationFragment;
 import com.example.mmusic.MusicFragment;
-import com.example.mmusic.PlayService;
 import com.myinfo.MyInfo;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.ComponentName;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends BaseActivity implements OnClickListener {
@@ -32,18 +35,20 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private ImageView img1,img2,img3;
 	private TextView text1,text2,text3;
 	private FragmentManager framMag;
-	private String username;
+	private NetworkReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bmob.initialize(MainActivity.this,"b300f3479f34cbcfd5ca5644d026abba");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        initBroadCast();
+        //æ­¤æ–¹æ³•ç”¨æ¥åŒæ­¥æœ¬åœ°å’ŒæœåŠ¡å™¨çš„æ—¶é—´ï¼Œé¿å…å‡ºç°ç”±ç”¨æˆ·ä¿®æ”¹æ‰‹æœºç³»ç»Ÿæ—¶é—´é€ æˆçš„sdk time errorçš„é—®é¢˜
+        Bmob.getInstance().synchronizeTime(this);
         initView();  
-		bind_service();	//°ó¶¨·şÎñ
-        getName();
         framMag=getFragmentManager();
-        setTab(0);	//µÚÒ»´ÎÆô¶¯Ê±£¬Ñ¡ÖĞµÚÒ»¸öÒ³Ãæ
+        setTab(0);	//ç¬¬ä¸€æ¬¡å¯åŠ¨æ—¶ï¼Œé€‰ä¸­ç¬¬ä¸€ä¸ªé¡µé¢
     }
 
 
@@ -67,7 +72,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		switch(v.getId()){			//µã»÷µ×ÏÂµ¼º½À¸£¬¼ÓÔØÏàÓ¦µÄ½çÃæ
+		switch(v.getId()){			//ç‚¹å‡»åº•ä¸‹å¯¼èˆªæ ï¼ŒåŠ è½½ç›¸åº”çš„ç•Œé¢
 		case R.id.location_view:
 			setTab(0);
 			break;
@@ -75,9 +80,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			setTab(1);
 			break;
 		case R.id.info_view:
-			 Intent intent=new Intent("com.action.GET_NAME");	//·¢ËÍ¹ã²¥
-			 intent.putExtra("username",username);
-			 LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcastSync(intent);
 			setTab(2);
 			break;
 		default:
@@ -86,26 +88,43 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		
 	}
 	
-	private String getName(){
-		 Intent intent=getIntent();
-	     username=intent.getStringExtra("username");
-	     return username;
+	private void initBroadCast(){	//æ³¨å†Œå¹¿æ’­ï¼Œæ£€æµ‹ç½‘ç»œçŠ¶æ€
+		IntentFilter iFilter = new IntentFilter();  
+		iFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+		mReceiver = new NetworkReceiver();  
+		registerReceiver(mReceiver, iFilter);
 	}
 	
-	 private void setTab(int i) {		//ÔÚ½çÃæ¶¯Ì¬¼ÓÔØËéÆ¬
+	 class NetworkReceiver extends BroadcastReceiver {  
+	    public void onReceive(Context context, Intent intent) {  
+	        String action = intent.getAction();  
+	        if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+	        	ConnectivityManager connMag=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+	        	NetworkInfo networkInfo=connMag.getActiveNetworkInfo();
+	        	if(networkInfo != null && networkInfo.isAvailable()){
+	        		String name=networkInfo.getTypeName();
+	        		Toast.makeText(MainActivity.this, "å½“å‰ç½‘ç»œä¸º"+name,Toast.LENGTH_SHORT).show();
+	        	}else{
+	        		Toast.makeText(MainActivity.this, "ç½‘ç»œå‡ºé”™ï¼Œè¯·æ£€æŸ¥ç½‘ç»œ",Toast.LENGTH_SHORT).show();
+	        	}	   
+	        }  
+	    }  
+	}
+
+	 private void setTab(int i) {		//åœ¨ç•Œé¢åŠ¨æ€åŠ è½½ç¢ç‰‡
 			// TODO Auto-generated method stub
-		 clearTab();		//Çå³ıÉÏ´ÎµÄ×´Ì¬
-		 FragmentTransaction transaction=framMag.beginTransaction();	//¿ªÆôÊÂÎñ
-		 hideFragment(transaction);	  //ÏÈÒş²ØµôËùÓĞµÄFragment£¬ÒÔ·ÀÖ¹ÓĞ¶à¸öFragmentÏÔÊ¾ÔÚ½çÃæÉÏµÄÇé¿ö
+		 clearTab();		//æ¸…é™¤ä¸Šæ¬¡çš„çŠ¶æ€
+		 FragmentTransaction transaction=framMag.beginTransaction();	//å¼€å¯äº‹åŠ¡
+		 hideFragment(transaction);	  //å…ˆéšè—æ‰æ‰€æœ‰çš„Fragmentï¼Œä»¥é˜²æ­¢æœ‰å¤šä¸ªFragmentæ˜¾ç¤ºåœ¨ç•Œé¢ä¸Šçš„æƒ…å†µ
 		 switch(i){
 		 case 0:
-			 img1.setImageResource(R.drawable.location2);	//µã»÷¸Ä±äÍ¼±ê×´Ì¬
-			 text1.setTextColor(Color.WHITE);				//µã»÷¸Ä±äÎÄ×Ö×´Ì¬
-			 if(locationFram==null){	//Îª¿Õ£¬´´½¨²¢Ìí¼Óµ½½çÃæÉÏ
+			 img1.setImageResource(R.drawable.location2);	//ç‚¹å‡»æ”¹å˜å›¾æ ‡çŠ¶æ€
+			 text1.setTextColor(Color.WHITE);				//ç‚¹å‡»æ”¹å˜æ–‡å­—çŠ¶æ€
+			 if(locationFram==null){	//ä¸ºç©ºï¼Œåˆ›å»ºå¹¶æ·»åŠ åˆ°ç•Œé¢ä¸Š
 				 locationFram=new LocationFragment();
 				 transaction.add(R.id.content,locationFram);
 			 }else{
-				 transaction.show(locationFram);	//ÏÔÊ¾½çÃæ
+				 transaction.show(locationFram);	//æ˜¾ç¤ºç•Œé¢
 			 }
 			 break;
 		 case 1:
@@ -130,10 +149,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			 break;
 			 
 		 } 
-		 transaction.commit();	//Ìá½»ÊÂÎñ
+		 transaction.commit();	//æäº¤äº‹åŠ¡
 		}
 
-	private void hideFragment(FragmentTransaction transaction) {	//Òş²ØËéÆ¬
+	private void hideFragment(FragmentTransaction transaction) {	//éšè—ç¢ç‰‡
 		// TODO Auto-generated method stub
 		if(locationFram!=null)
 			transaction.hide(locationFram);
@@ -144,10 +163,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 
-	private void clearTab() {		//»Ö¸´³õÊ¼×´Ì¬
+	private void clearTab() {		//æ¢å¤åˆå§‹çŠ¶æ€
 		// TODO Auto-generated method stub
 		img1.setImageResource(R.drawable.location1);
-		text1.setTextColor(Color.parseColor("#a9b7b7"));	//»ÒÉ«
+		text1.setTextColor(Color.parseColor("#a9b7b7"));	//ç°è‰²
 		img2.setImageResource(R.drawable.music1);
 		text2.setTextColor(Color.parseColor("#a9b7b7"));
 		img3.setImageResource(R.drawable.info1);
@@ -155,27 +174,13 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		
 	}
 	
-	private void bind_service(){
-		ServiceConnection connection=new ServiceConnection() {
-			
-			@Override
-			public void onServiceDisconnected(ComponentName name) {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public void onServiceConnected(ComponentName name, IBinder service) {
-				// TODO Auto-generated method stub
-				
-			}
-		};
-		Intent bindIntent=new Intent(this,PlayService.class);
-		bindService(bindIntent,connection,BIND_AUTO_CREATE);
+	@Override
+	protected void onDestory() {
+		// TODO Auto-generated method stub
+		super.onDestory();
+		unregisterReceiver(mReceiver);
 	}
 	
-	
-	
-
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -189,9 +194,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -4,50 +4,75 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <LinearLayout
+     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#a9b7b7"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/bt_location"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:text="定位" />
+        android:layout_height="56dp"
+        android:background="@drawable/title_bg"
+        android:orientation="horizontal">
         
-        <Button
-            android:id="@+id/bt_start"
+        <ImageView 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_weight="1"
+        	android:layout_marginStart="16dp"
+        	android:layout_marginLeft="16dp"
+        	android:src="@drawable/run"/>
+      
+        <TextView 
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:text="开始" />
-
-        <Button
-            android:id="@+id/bt_stop"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:text="Go Running"/>
+        
+        <ImageView 
+            android:id="@+id/loc_menu"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="结束" />
+            android:layout_gravity="end|center"
+        	android:layout_marginEnd="16dp"
+        	android:layout_marginRight="16dp"
+        	android:src="@drawable/menu"/>
     </LinearLayout>
     
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#a9b7b7"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/bt_location"
+            android:layout_width="64dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/btn_1"
+            android:text="定位" />
+        
+        <Button
+            android:id="@+id/bt_start"
+            android:layout_width="64dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_1"
+            android:text="开始" />
+
+        <Button
+            android:id="@+id/bt_stop"
+            android:layout_width="64dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_1"
+            android:text="停止" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal" >
     <TextView
             android:id="@+id/distance"
@@ -63,7 +88,16 @@
         android:layout_centerInParent="true"
         android:textColor="#eb4f38"
         android:textSize="14sp"/>
-    </RelativeLayout>>
+    
+    <TextView 
+        android:id="@+id/time_sport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="#eb4f38"
+        android:textSize="14sp"/>
+    </RelativeLayout>
     
     <com.baidu.mapapi.map.MapView
         android:id="@+id/map_view"

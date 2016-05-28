@@ -1,22 +1,22 @@
-package com.example.gorunning;
+ï»¿package com.example.gorunning;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 
-public class ActivityCollertor {		//»î¶¯¹ÜÀíÆ÷
+public class ActivityCollertor {		//æ´»åŠ¨ç®¡ç†å™¨
 	public static List<Activity> activitys=new ArrayList<Activity>();
 	
-	public static void addActivity(Activity activity){		//Ìí¼Ó»î¶¯
+	public static void addActivity(Activity activity){		//æ·»åŠ æ´»åŠ¨
 		activitys.add(activity);
 	}
 	
-	public static void removeActivity(Activity activity){	//ÒÆ³ö»î¶¯
+	public static void removeActivity(Activity activity){	//ç§»å‡ºæ´»åŠ¨
 		activitys.remove(activity);
 	}
 	
-	public static void finshAll(){			//½áÊø»î¶¯
+	public static void finshAll(){			//ç»“æŸæ´»åŠ¨
 		for(Activity activity:activitys){
 			if(!activity.isFinishing()){
 				activity.finish();
